@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Ujian Informatika Fase D - SMP Negeri 2 Ngadirejo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: #fff !important; color: #000 !important; font-size: 12pt; }
+            .print-card { border: 1px solid #ccc !important; box-shadow: none !important; page-break-inside: avoid; }
+        }
+        .print-only { display: none; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-100 font-sans min-h-screen text-slate-800 flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Bar Header -->
+    <header class="bg-brand-900 text-white shadow-lg sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-brand-700 p-2 rounded-lg font-bold text-lg text-white tracking-wider">CBT</div>
+                <div>
+                    <h1 class="font-bold text-sm sm:text-base leading-tight">Ujian Informatika Fase D (HOTS)</h1>
+                    <p class="text-xs text-brand-100">SMP NEGERI 2 NGADIREJO • Guru: Budi Winarno, S.Kom.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-right hidden sm:block">
+                    <div id="realtime-clock" class="text-xs font-mono font-medium text-brand-100">00:00:00 WIB</div>
+                    <div class="text-[10px] text-brand-200">Waktu Server Real-time</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+        <!-- 1. FORM IDENTITAS SISWA -->
+        <section id="screen-login" class="max-w-lg mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 transition-all duration-300">
+            <div class="bg-gradient-to-r from-brand-700 to-brand-900 p-6 text-white text-center">
+                <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3 backdrop-blur-sm">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+                </div>
+                <h2 class="text-xl font-bold">Asesmen Pembelajaran Informatika</h2>
+                <p class="text-xs text-brand-100 mt-1">Kelas 7, 8, & 9 (Elemen BK, TIK, SK, JKD, AD, AP, DSI, PLB)</p>
+            </div>
+            
+            <form id="form-login" onsubmit="startExam(event)" class="p-6 space-y-5">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Lengkap Siswa</label>
+                    <input type="text" id="input-nama" required placeholder="Masukkan nama lengkap..." class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition text-slate-800 text-sm">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Kelas</label>
+                        <select id="input-kelas" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition text-slate-800 text-sm bg-white">
+                            <option value="">-- Pilih Kelas --</option>
+                            <optgroup label="Kelas 7">
+                                <option value="7A">7 A</option><option value="7B">7 B</option><option value="7C">7 C</option><option value="7D">7 D</option>
+                            </optgroup>
+                            <optgroup label="Kelas 8">
+                                <option value="8A">8 A</option><option value="8B">8 B</option><option value="8C">8 C</option><option value="8D">8 D</option>
+                            </optgroup>
+                            <optgroup label="Kelas 9">
+                                <option value="9A">9 A</option><option value="9B">9 B</option><option value="9C">9 C</option><option value="9D">9 D</option><option value="9E">9 E</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nomor Absen</label>
+                        <input type="number" id="input-absen" min="1" max="50" required placeholder="Contoh: 12" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition text-slate-800 text-sm">
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-amber-800 text-xs leading-relaxed space-y-1">
+                    <div class="font-bold flex items-center gap-1">
+                        <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Petunjuk Pengerjaan:
+                    </div>
+                    <ul class="list-disc list-inside space-y-0.5 text-amber-900/80">
+                        <li>Jumlah Soal: <b>100 Butir HOTS</b> (Pilihan Ganda A, B, C, D)</li>
+                        <li>Durasi Waktu: <b>60 Menit</b> (Timer berjalan otomatis)</li>
+                        <li>Soal & Opsi Jawaban diacak secara otomatis oleh sistem</li>
+                        <li>Gunakan tombol <b>Ragu-Ragu</b> jika belum yakin dengan jawaban</li>
+                    </ul>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-[0.99] flex items-center justify-center gap-2 text-sm">
+                    <span>Mulai Ujian Sekarang</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+            </form>
+        </section>
+
+        <!-- 2. LEMBAR UJIAN / EXAM INTERFACE -->
+        <section id="screen-exam" class="hidden no-print">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                
+                <!-- Main Question Area (3 Cols) -->
+                <div class="lg:col-span-3 space-y-5">
+                    
+                    <!-- Timer & Status Bar -->
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center space-x-3">
+                            <span class="px-3 py-1 bg-brand-100 text-brand-800 font-semibold rounded-lg text-xs" id="badge-elemen">Elemen: Informatika</span>
+                            <span class="text-xs text-slate-500" id="badge-soal-num">Soal 1 dari 100</span>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-red-50 text-red-600 px-3 py-1.5 rounded-lg border border-red-100">
+                            <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span class="text-xs font-bold uppercase tracking-wide">Sisa Waktu:</span>
+                            <span id="timer-countdown" class="font-mono text-sm font-bold">60:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Question Container -->
+                    <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 sm:p-8 relative min-h-[380px] flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-4 mb-4">
+                                <h3 class="text-base sm:text-lg font-semibold text-slate-800 leading-relaxed" id="question-text">
+                                    Memuat soal...
+                                </h3>
+                            </div>
+
+                            <!-- Options Container -->
+                            <div class="space-y-3 mt-6" id="options-container">
+                                <!-- Options rendered via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Footer Navigation Buttons -->
+                        <div class="pt-6 mt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                            <button onclick="prevQuestion()" id="btn-prev" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                                Sebelum
+                            </button>
+
+                            <label class="inline-flex items-center gap-2 cursor-pointer bg-amber-50 hover:bg-amber-100 text-amber-800 px-3 py-2 rounded-lg border border-amber-200 transition text-xs font-semibold select-none">
+                                <input type="checkbox" id="check-ragu" onchange="toggleRagu()" class="w-4 h-4 text-amber-600 rounded border-amber-300 focus:ring-amber-500">
+                                <span>Ragu - Ragu</span>
+                            </label>
+
+                            <button onclick="nextQuestion()" id="btn-next" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-medium text-sm rounded-lg transition flex items-center gap-1.5 shadow-sm">
+                                Lanjut
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Navigation Panel Grid (1 Col) -->
+                <div class="lg:col-span-1 space-y-4">
+                    <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-5 sticky top-20">
+                        <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                            <h4 class="font-bold text-slate-700 text-sm">Navigasi Soal</h4>
+                            <span class="text-xs text-slate-400 font-mono" id="stat-terjawab">0/100 Terjawab</span>
+                        </div>
+
+                        <!-- Legend -->
+                        <div class="grid grid-cols-3 gap-1 mb-4 text-[10px] text-center">
+                            <div class="p-1 rounded bg-brand-600 text-white font-medium">Sudah</div>
+                            <div class="p-1 rounded bg-amber-400 text-slate-900 font-medium">Ragu</div>
+                            <div class="p-1 rounded bg-slate-100 text-slate-600 border border-slate-200">Belum</div>
+                        </div>
+
+                        <!-- Grid 100 buttons -->
+                        <div class="grid grid-cols-5 gap-1.5 max-h-[340px] overflow-y-auto pr-1" id="nav-grid">
+                            <!-- Nav buttons rendered via JS -->
+                        </div>
+
+                        <button onclick="confirmSubmit()" class="w-full mt-5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold py-2.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Selesaikan Ujian
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. HALAMAN HASIL / NILAI OTOMATIS -->
+        <section id="screen-result" class="hidden space-y-6">
+            
+            <!-- Result Card for Web View & Print -->
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden print-card">
+                <div class="bg-gradient-to-r from-brand-800 to-slate-900 p-6 sm:p-8 text-white relative">
+                    <div class="flex flex-wrap justify-between items-center gap-4">
+                        <div>
+                            <span class="bg-brand-500/30 text-brand-200 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">Laporan Hasil Asesmen</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Ujian Informatika Fase D</h2>
+                            <p class="text-xs text-slate-300 mt-1">SMP NEGERI 2 NGADIREJO • Guru Pengampu: Budi Winarno, S.Kom.</p>
+                        </div>
+                        <div class="text-right bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/10">
+                            <div class="text-xs text-slate-300 uppercase font-semibold">Skor Akhir</div>
+                            <div class="text-4xl sm:text-5xl font-black text-amber-400" id="res-score">0</div>
+                            <div class="text-[10px] text-slate-300">Skala Nilai 0 - 100</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Metadata Grid -->
+                <div class="p-6 bg-slate-50 border-b border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+                    <div>
+                        <span class="text-slate-400 block uppercase font-medium">Nama Siswa</span>
+                        <span class="font-bold text-slate-800 text-sm" id="res-nama">-</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block uppercase font-medium">Kelas / Absen</span>
+                        <span class="font-bold text-slate-800 text-sm"><span id="res-kelas">-</span> / No. <span id="res-absen">-</span></span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block uppercase font-medium">Waktu Pengerjaan</span>
+                        <span class="font-bold text-slate-800 text-sm" id="res-waktu">-</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block uppercase font-medium">Tanggal Ujian</span>
+                        <span class="font-bold text-slate-800 text-sm" id="res-tanggal">-</span>
+                    </div>
+                </div>
+
+                <!-- Stats Summary -->
+                <div class="p-6 grid grid-cols-3 gap-4 text-center border-b border-slate-200">
+                    <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+                        <div class="text-emerald-600 font-bold text-xl sm:text-2xl" id="res-benar">0</div>
+                        <div class="text-[11px] text-emerald-800 font-medium">Jawaban Benar</div>
+                    </div>
+                    <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl">
+                        <div class="text-rose-600 font-bold text-xl sm:text-2xl" id="res-salah">0</div>
+                        <div class="text-[11px] text-rose-800 font-medium">Jawaban Salah</div>
+                    </div>
+                    <div class="bg-slate-100 border border-slate-200 p-3 rounded-xl">
+                        <div class="text-slate-700 font-bold text-xl sm:text-2xl" id="res-kosong">0</div>
+                        <div class="text-[11px] text-slate-600 font-medium">Tidak Dijawab</div>
+                    </div>
+                </div>
+
+                <!-- Action Toolbar (No Print) -->
+                <div class="p-6 bg-white flex flex-wrap gap-3 justify-between items-center no-print">
+                    <button onclick="downloadCSV()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition shadow flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        Unduh Rekap Nilai (.CSV)
+                    </button>
+                    
+                    <div class="flex items-center gap-2">
+                        <button onclick="window.print()" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition shadow flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                            Cetak Hasil / Pembahasan
+                        </button>
+                        <button onclick="location.reload()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-semibold transition">
+                            Ulangi Ujian
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Question Analysis / Pembahasan -->
+            <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 space-y-6">
+                <h3 class="text-base font-bold text-slate-800 border-b border-slate-200 pb-3 flex items-center justify-between">
+                    <span>Analisis Jawaban & Pembahasan Detail Soal</span>
+                    <span class="text-xs font-normal text-slate-500">100 Soal Evaluasi</span>
+                </h3>
+
+                <div id="pembahasan-container" class="space-y-4">
+                    <!-- Pembahasan item list generated by JS -->
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print">
+        <p>&copy; 2026 SMP Negeri 2 Ngadirejo — Tim Pengembang Pembelajaran Digital Informatika</p>
+    </footer>
+
+    <script>
+        // DATA BANK: 100 SOAL HOTS INFORMATIKA FASE D (KELAS 7, 8, 9)
+        // ELEMEN: BK, TIK, SK, JKD, AD, AP, DSI, PLB
+        const rawQuestions = [
+            // --- BERPIKIR KOMPUTASIONAL (BK) ---
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Sebuah sistem mesin cuci otomatis menentukan waktu pencucian berdasarkan berat pakaian dan tingkat kekotoran. Pendekatan Berpikir Komputasional yang digunakan saat memecahkan masalah besar ini menjadi langkah-langkah kecil (penimbangan, pembilasan, pengeringan) disebut...",
+                options: ["Dekomposisi", "Pengenalan Pola", "Abstraksi", "Algoritma"],
+                answer: 0
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Dalam sebuah jaringan antrean rumah sakit, sistem mengambil nomor urut paling pertama mendaftar untuk dilayani terlebih dahulu (FCFS). Struktur data yang paling cocok menggambarkan prinsip ini adalah...",
+                options: ["Stack (Tumpukan / LIFO)", "Queue (Antrean / FIFO)", "Tree (Pohon)", "Graph (Graf)"],
+                answer: 1
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Seseorang ingin menata kembali tumpukan piring bekas setelah dicuci. Piring yang terakhir dicuci diletakkan di paling atas dan akan diambil pertama kali saat disajikan. Prinsip struktur data ini adalah...",
+                options: ["Queue (FIFO)", "Stack (LIFO)", "Array Satu Dimensi", "Linked List"],
+                answer: 1
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Perhatikan urutan angka: 3, 7, 15, 31, X. Berdasarkan analisis pola bilangan komputasional, nilai X yang tepat adalah...",
+                options: ["45", "63", "55", "60"],
+                answer: 1
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Dalam merancang peta jaringan jalan kota, insinyur menghilangkan detail seperti warna rumah, jenis pepohonan, dan nama pemilik tanah, lalu hanya menampilkan garis jalan dan persimpangan. Proses ini menerapkan konsep...",
+                options: ["Dekomposisi", "Abstraksi", "Algoritma", "Pengenalan Pola"],
+                answer: 1
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Diberikan algoritma pencarian: Jika data terurut dari terkecil ke terbesar, kita membagi dua daftar data dan membandingkan elemen tengahnya. Jika data dicari lebih kecil, kita mencari di separuh kiri. Algoritma ini adalah...",
+                options: ["Linear Search", "Binary Search", "Bubble Sort", "Selection Sort"],
+                answer: 1
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Teknik pengurutan data dengan cara membandingkan dua elemen yang berdekatan dan menukarnya jika urutannya salah secara berulang-ulang sampai data terurut disebut...",
+                options: ["Insertion Sort", "Merge Sort", "Bubble Sort", "Quick Sort"],
+                answer: 2
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Sebuah robot pembersih ruangan memindai lantai dan menemukan jalur terpendek dari titik A ke titik B dengan menghindari rintangan meja dan kursi. Struktur data visual yang digunakan robot untuk memodelkan jalur persimpangan tersebut adalah...",
+                options: ["Array", "Stack", "Graph", "Queue"],
+                answer: 2
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Di perpustakaan SMPN 2 Ngadirejo, pustakawan menyusun buku berdasarkan kode Klasifikasi DDC dari angka terkecil hingga terbesar. Metode pencarian buku yang paling efisien ketika rak buku sudah terurut adalah...",
+                options: ["Pencarian Acak", "Pencarian Biner (Binary Search)", "Pencarian Berurutan (Linear Search)", "Pencarian Lompat"],
+                answer: 1
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Perhatikan ekspresi logika: (TRUE AND FALSE) OR (NOT FALSE). Hasil evaluasi nilai kebenaran dari ekspresi tersebut adalah...",
+                options: ["TRUE", "FALSE", "UNDEFINED", "ERROR"],
+                answer: 0
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Jika sebuah algoritma memiliki kompleksitas waktu O(1), artinya kecepatan eksekusi algoritma tersebut...",
+                options: ["Berbanding lurus dengan jumlah data", "Konstan dan tidak dipengaruhi jumlah data", "Semakin lambat seiring bertambahnya data", "Membutuhkan waktu kuadrat dari data"],
+                answer: 1
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Seorang siswa membagi tugas proyek pembuatan aplikasi menjadi 4 bagian: Desain UI, Database, Coding, dan Testing. Setelah itu ia menyusun urutan langkah kerja. Aktivitas menyusun urutan langkah secara sistematis disebut...",
+                options: ["Abstraksi", "Algoritma", "Dekomposisi", "Pengenalan Pola"],
+                answer: 1
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Di dalam struktur data Pohon (Tree), elemen yang paling atas dan tidak memiliki induk (parent) disebut...",
+                options: ["Leaf (Daun)", "Branch (Dahan)", "Root (Akar)", "Node (Simpul)"],
+                answer: 2
+            },
+
+            // --- TEKNOLOGI INFORMASI DAN KOMUNIKASI (TIK) ---
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Di aplikasi perkantoran seperti Microsoft Word / Google Docs, fitur yang digunakan untuk membuat surat masal otomatis ke banyak penerima dengan data berbeda dari Excel adalah...",
+                options: ["Mail Merge", "Table of Contents", "Track Changes", "Cross-reference"],
+                answer: 0
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Saat mengetik laporan di pengolah kata, shortcut keyboard yang tepat untuk menyalin teks yang di-highlight dan menempelkannya di tempat lain berturut-turut adalah...",
+                options: ["Ctrl+X dan Ctrl+V", "Ctrl+C dan Ctrl+V", "Ctrl+A dan Ctrl+C", "Ctrl+Z dan Ctrl+Y"],
+                answer: 1
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Format ekstensi berkas yang digunakan untuk menyimpan dokumen lembar kerja spreadsheet pada aplikasi Microsoft Excel modern adalah...",
+                options: [".docx", ".pptx", ".xlsx", ".pdf"],
+                answer: 2
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Dalam pembuatan presentasi yang menarik, fitur yang digunakan untuk memberi efek animasi perpindahan antarslide dari slide satu ke slide berikutnya adalah...",
+                options: ["Custom Animation", "Slide Transition", "Design Ideas", "Master Slide"],
+                answer: 1
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Integrasi konten antar-aplikasi perkantoran (misal menyisipkan tabel Excel ke dalam MS Word) sehingga jika data di Excel diubah, data di Word ikut diperbarui secara otomatis menggunakan teknik...",
+                options: ["Copy and Paste Plain Text", "Object Linking and Embedding (OLE)", "Export to PDF", "Screen Capture"],
+                answer: 1
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Layanan penyimpanan awan (Cloud Storage) milik Google yang terintegrasi langsung dengan akun Gmail dan Google Docs adalah...",
+                options: ["OneDrive", "Dropbox", "Google Drive", "iCloud"],
+                answer: 2
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Untuk mengamankan dokumen digital PDF agar tidak dapat diubah isi kontennya oleh pihak yang tidak berwenang, kita dapat memanfaatkan fitur pengolah dokumen yaitu...",
+                options: ["Protect Document with Password / Encrypt", "Compress File", "Save as Rich Text Format", "Watermark"],
+                answer: 0
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Perjelas fungsi dari aplikasi peramban (Web Browser). Manakah aplikasi di bawah ini yang tergolong Web Browser?",
+                options: ["Google Chrome, Mozilla Firefox, Microsoft Edge", "Microsoft Word, Excel, PowerPoint", "Photoshop, CorelDraw, Canva", "Windows 11, Linux, macOS"],
+                answer: 0
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Di aplikasi pengolah kata, untuk membuat daftar pustaka atau catatan kaki otomatis yang sesuai standar akademik, kita dapat menggunakan menu...",
+                options: ["References -> Insert Footnote / Citation", "Insert -> Header & Footer", "Layout -> Page Setup", "View -> Outline"],
+                answer: 0
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Mesin pencari (Search Engine) memanfaatkan karakter khusus untuk menyaring hasil pencarian. Jika kita ingin mencari frasa persis 'SMP Negeri 2 Ngadirejo', tanda baca yang harus digunakan adalah...",
+                options: ["Tanda petik ganda (\"...\")", "Tanda kurung ((...))", "Tanda pagar (#...)", "Tanda bintang (*...)"],
+                answer: 0
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Fitur pada aplikasi spreadsheet yang digunakan untuk membekukan baris header atas agar tetap terlihat saat lembar kerja di-scroll ke bawah adalah...",
+                options: ["Split Window", "Freeze Panes", "Wrap Text", "Merge & Center"],
+                answer: 1
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Jenis grafik di lembar kerja yang paling tepat untuk menggambarkan persentase proporsi atau kontribusi bagian terhadap keseluruhan (100%) adalah...",
+                options: ["Grafik Batang (Column Chart)", "Grafik Lingkaran (Pie Chart)", "Grafik Garis (Line Chart)", "Grafik Radar"],
+                answer: 1
+            },
+
+            // --- SISTEM KOMPUTER (SK) ---
+            {
+                elemen: "Sistem Komputer",
+                q: "Komponen perangkat keras komputer yang berfungsi sebagai 'otak' pemrosesan utama instruksi program dan perhitungan aritmetika adalah...",
+                options: ["RAM", "Harddisk Drive", "CPU (Central Processing Unit)", "Power Supply"],
+                answer: 2
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Memori utama komputer yang bersifat volatile (data hilang saat listrik dimatikan) dan berfungsi menyimpan data sementara saat aplikasi berjalan adalah...",
+                options: ["ROM", "RAM", "SSD", "Flashdisk"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Sistem bilangan basis 2 yang hanya menggunakan angka 0 dan 1 sebagai bahasa mesin komputer disebut sistem bilangan...",
+                options: ["Desimal", "Oktal", "Biner", "Heksadesimal"],
+                answer: 2
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Konversikan bilangan biner 1011 (basis 2) ke dalam nilai desimal (basis 10)...",
+                options: ["9", "11", "13", "15"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Konversikan bilangan desimal 25 ke dalam bilangan biner...",
+                options: ["11001", "10101", "11100", "10011"],
+                answer: 0
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Sistem bilangan Heksadesimal menggunakan basis 16. Huruf 'A' pada sistem heksadesimal mewakili nilai desimal...",
+                options: ["10", "11", "12", "15"],
+                answer: 0
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Siklus pemrosesan informasi pada komputer secara umum mengikuti alur urutan...",
+                options: ["Output -> Input -> Process -> Storage", "Input -> Process -> Output -> Storage", "Process -> Input -> Storage -> Output", "Storage -> Process -> Input -> Output"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Sistem operasi bertindak sebagai penghubung antara perangkat keras dan pengguna. Manakah di bawah ini yang merupakan contoh Sistem Operasi open-source?",
+                options: ["Microsoft Windows 11", "Apple macOS", "Linux Ubuntu", "iOS"],
+                answer: 2
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Perangkat keras input yang berfungsi mengubah dokumen cetak fisik menjadi format gambar digital adalah...",
+                options: ["Plotter", "Scanner", "Printer Thermal", "Projector"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Komponen hardware yang menyimpan firmware booting dasar komputer (BIOS/UEFI) dan bersifat non-volatile adalah...",
+                options: ["RAM", "ROM", "Cache Memory", "Virtual Memory"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Port transfer data kabel pada komputer modern yang mendukung transmisi audio dan video digital kualitas tinggi secara bersamaan adalah...",
+                options: ["VGA", "HDMI", "PS/2", "Audio Jack 3.5mm"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Bagian dari CPU yang bertugas melakukan operasi matematika (penjumlahan, pengurangan) dan operasi logika (AND, OR, NOT) adalah...",
+                options: ["Control Unit (CU)", "Arithmetic Logic Unit (ALU)", "Register", "Bus Unit"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Perangkat media penyimpanan sekunder berbasis chip flash tanpa bagian mekanis bergerak yang memiliki kecepatan akses jauh lebih cepat dibanding HDD adalah...",
+                options: ["Floppy Disk", "SSD (Solid State Drive)", "CD-ROM", "Magnetic Tape"],
+                answer: 1
+            },
+
+            // --- JARINGAN KOMPUTER DAN INTERNET (JKD) ---
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Jaringan komputer yang mencakup area geografis terbatas seperti dalam satu ruangan laboratorium sekolah dinamakan...",
+                options: ["LAN (Local Area Network)", "WAN (Wide Area Network)", "MAN (Metropolitan Area Network)", "PAN (Personal Area Network)"],
+                answer: 0
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Protokol standar jaringan yang bertugas menerjemahkan nama domain web (seperti www.smpn2ngadirejo.sch.id) menjadi alamat IP numerik adalah...",
+                options: ["DHCP", "HTTP", "DNS (Domain Name System)", "FTP"],
+                answer: 2
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Kabel jaringan terpilin yang paling populer digunakan untuk menghubungkan komputer ke switch/router dalam jaringan LAN adalah kabel...",
+                options: ["Coaxial", "Fiber Optic", "UTP (Unshielded Twisted Pair)", "Kabel Tembaga Tunggal"],
+                answer: 2
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Alamat unik berupa kombinasi 4 deret angka (contoh: 192.168.1.10) yang mengidentifikasi setiap perangkat dalam jaringan komputer dinamakan...",
+                options: ["MAC Address", "IP Address", "URL Address", "Subnet Mask"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Metode enkripsi jaringan WiFi yang paling aman saat ini untuk mencegah peretasan kata sandi adalah...",
+                options: ["WEP", "WPA2 / WPA3", "Open Network", "MAC Filtering saja"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Perangkat keras jaringan yang berfungsi menghubungkan dua atau lebih jaringan berbeda segmen dan mengarahkan paket data melalui rute terbaik adalah...",
+                options: ["Hub", "Switch", "Router", "Repeater"],
+                answer: 2
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Protokol komunikasi aman yang ditandai dengan ikon gembok di peramban web dan mengenkripsi transfer data antara browser dan web server adalah...",
+                options: ["HTTP", "HTTPS", "FTP", "SMTP"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Kejahatan siber di mana pelaku membuat situs web palsu yang menyerupai situs asli untuk mencuri kata sandi dan data perbankan korban disebut...",
+                options: ["Phishing", "Ransomware", "DDoS Attack", "Spamming"],
+                answer: 0
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Perangkat lunak atau sistem keamanan yang memantau dan menyaring lalu lintas jaringan masuk dan keluar berdasarkan aturan keamanan tertentu adalah...",
+                options: ["Antivirus", "Firewall", "Spyware", "Adware"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Koneksi internet tanpa kabel jarak pendek yang memanfaatkan gelombang radio frekuensi 2.4 GHz atau 5 GHz dinamakan...",
+                options: ["Bluetooth", "Wi-Fi (Wireless Fidelity)", "Infrared", "NFC"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Topologi jaringan di mana seluruh komputer terhubung ke satu titik pusat (central node/switch). Jika salah satu kabel node putus, node lain tetap berfungsi. Topologi ini adalah...",
+                options: ["Topologi Bus", "Topologi Ring", "Topologi Star", "Topologi Mesh"],
+                answer: 2
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Teknologi seluler generasi kelima yang menawarkan kecepatan transfer data sangat tinggi hingga orde Gbps dan latensi rendah adalah...",
+                options: ["3G", "4G LTE", "5G", "EDGE"],
+                answer: 2
+            },
+
+            // --- ANALISIS DATA (AD) ---
+            {
+                elemen: "Analisis Data",
+                q: "Pada spreadsheet, rumus yang digunakan untuk menghitung nilai rata-rata dari sekumpulan data pada rentang sel A1 sampai A10 adalah...",
+                options: ["=SUM(A1:A10)", "=AVERAGE(A1:A10)", "=COUNT(A1:A10)", "=MAX(A1:A10)"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Fungsi logika Excel yang digunakan untuk menguji suatu kondisi dan mengembalikan nilai TRUE jika kondisi terpenuhi serta FALSE jika tidak terpenuhi adalah...",
+                options: ["=IF()", "=LOOKUP()", "=AND()", "=CONCATENATE()"],
+                answer: 0
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Perhatikan rumus: =IF(B2>=75; 'LULUS'; 'REMIDI'). Jika sel B2 berisi nilai 80, maka hasil yang ditampilkan di sel tersebut adalah...",
+                options: ["REMIDI", "LULUS", "ERROR", "80"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Fungsi statistik spreadsheet untuk menghitung jumlah sel yang berisi angka/data numerik saja dalam suatu range adalah...",
+                options: ["COUNTA", "COUNT", "COUNTIF", "SUMIF"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Jika kita ingin menghitung total nilai siswa KHUSUS untuk kelas '7A' saja dari sebuah tabel data sekolah, fungsi yang paling tepat digunakan adalah...",
+                options: ["=SUM()", "=SUMIF()", "=COUNTIF()", "=AVERAGEIF()"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Fitur pada aplikasi pengolah data spreadsheet yang memungkinkan pengguna meringkas, menganalisis, dan mengeksplorasi data dalam jumlah besar secara interaktif adalah...",
+                options: ["Data Validation", "Pivot Table", "Conditional Formatting", "Sort & Filter"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Fitur yang digunakan untuk memberikan warna latar belakang otomatis pada sel angka yang bernilai di bawah KKM (< 75) di sebut...",
+                options: ["Format Cells", "Conditional Formatting", "Data Validation", "AutoFit Row"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Fungsi pembacaan tabel secara vertikal berdasarkan kata kunci pencarian pada kolom pertama dinamakan...",
+                options: ["HLOOKUP", "VLOOKUP", "INDEX", "MATCH"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Simbol yang harus diletakkan di awal penulisan rumus/formula pada aplikasi spreadsheet seperti MS Excel atau Google Sheets adalah...",
+                options: ["Tanda petik (')", "Tanda tambah (+)", "Tanda sama dengan (=)", "Tanda titik dua (:)"],
+                answer: 2
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Aktivitas pembersihan data dari kesalahan ketik, nilai yang hilang (missing values), atau data ganda sebelum dilakukan analisis dinamakan...",
+                options: ["Data Collection", "Data Cleaning", "Data Visualization", "Data Mining"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Penggunaan tanda $ pada referensi sel spreadsheet (contoh: $A$1) berfungsi untuk membuat sel tersebut menjadi...",
+                options: ["Referensi Relatif", "Referensi Absolut (Tetap)", "Referensi Semi-Relatif", "Teks biasa"],
+                answer: 1
+            },
+
+            // --- ALGORITMA DAN PEMROGRAMAN (AP) ---
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Dalam pemrograman visual Scratch, blok perintah berulang yang menjalankan instruksi di dalamnya tanpa henti disebut blok...",
+                options: ["repeat (10)", "forever", "if-then", "wait (1) secs"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Wadah dalam memori komputer yang digunakan untuk menyimpan nilai data yang dapat berubah-ubah selama program berjalan dinamakan...",
+                options: ["Konstanta", "Variabel", "Tipe Data", "Operator"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Tipe data dalam bahasa pemrograman yang khusus menyimpan nilai kebenaran berupa True atau False adalah...",
+                options: ["Integer", "String", "Boolean", "Float"],
+                answer: 2
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Simbol flowchart yang berbentuk belah ketupat (diamond) digunakan untuk menggambarkan proses...",
+                options: ["Input / Output Data", "Keputusan / Percabangan (Decision)", "Awal / Akhir Program (Terminator)", "Proses Perhitungan"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Perhatikan pseudo-code berikut:\nSET x = 5\nSET y = 3\nSET z = x + y * 2\nBerapakah nilai variabel z akhir?",
+                options: ["16", "11", "13", "10"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Struktur kontrol percabangan di mana ada dua pilihan keputusan (kondisi benar atau salah) biasanya menggunakan perintah...",
+                options: ["FOR ... NEXT", "IF ... ELSE", "WHILE ... DO", "SWITCH ... CASE"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Kesalahan sintaksis (Syntax Error) pada pemrograman terjadi apabila...",
+                options: ["Program menghasilkan output hitungan yang salah", "Penulisan tata bahasa/aturan kode tidak sesuai standar bahasa pemrogramannya", "Komputer kehabisan memori RAM saat running", "Koneksi internet terputus"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Dalam pemrograman Scratch, Kategori warna blok perintah yang berhubungan dengan menggerakkan objek/sprite (seperti move 10 steps, turn 15 degrees) adalah...",
+                options: ["Warna Biru (Motion)", "Warna Kuning (Events)", "Warna Oranye (Variables)", "Warna Hijau (Operators)"],
+                answer: 0
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Di bawah ini yang merupakan contoh penulisan algoritma dalam bentuk teks informal yang menyerupai struktur bahasa pemrograman adalah...",
+                options: ["Flowchart", "Pseudocode", "Diagram Venn", "Mind Mapping"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Proses mencari dan memperbaiki kesalahan atau bug di dalam kode program komputer dinamakan...",
+                options: ["Compiling", "Debugging", "Refactoring", "Encoding"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Perulangan bersarang (Nested Loop) berarti...",
+                options: ["Adanya fungsi yang memanggil dirinya sendiri", "Struktur perulangan di dalam perulangan lainnya", "Perulangan yang berhenti otomatis saat error", "Perulangan tanpa ada kondisi henti"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Tipe data yang cocok untuk menyimpan nilai harga barang berupa bilangan desimal koma (seperti 15500.50) adalah...",
+                options: ["Integer", "Float / Double", "Char", "Boolean"],
+                answer: 1
+            },
+
+            // --- DAMPAK SOSIAL INFORMATIKA (DSI) ---
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Undang-Undang di Indonesia yang mengatur tentang informasi, transaksi elektronik, dan sanksi tindak kejahatan siber adalah...",
+                options: ["UU Hak Cipta", "UU ITE (Informasi dan Transaksi Elektronik)", "UU Ketenagakerjaan", "UU Perlindungan Konsumen"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Lisensi perangkat lunak bebas yang mengizinkan pengguna untuk membuka kode sumber, memodifikasi, dan membagikannya kembali secara gratis disebut...",
+                options: ["Proprietary License", "Open Source / Creative Commons", "Commercial License", "Shareware Trial"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Tindakan merundung, mengancam, mempermukakan, atau mengintimidasi seseorang melalui media sosial atau platform digital dikenal dengan istilah...",
+                options: ["Cyberbullying", "Cyberstalking", "Hacking", "Carding"],
+                answer: 0
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Kesenjangan atau jurang pemisah antara kelompok masyarakat yang memiliki akses internet dan teknologi digital dengan kelompok yang tidak memilikinya disebut...",
+                options: ["Digital Divide (Kesenjangan Digital)", "Digital Footprint", "Digital Native", "Digital Literacy"],
+                answer: 0
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Jejak aktivitas, data pencarian, serta unggahan yang kita tinggalkan saat berinternet dan sulit dihapus sepenuhnya dinamakan...",
+                options: ["Digital History", "Digital Footprint (Jejak Digital)", "Cookies", "Cache Data"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Sikap etis yang harus ditunjukkan saat mengutip hasil karya tulis atau gambar dari internet dalam tugas sekolah adalah...",
+                options: ["Menyalin seluruhnya tanpa mencantumkan sumber", "Mencantumkan nama pencipta dan sumber rujukan secara jelas", "Mengklaim karya tersebut buatan sendiri", "Mengubah nama penulis menjadi nama sendiri"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Fenomena penyebaran berita palsu yang tidak terverifikasi kebenarannya melalui media sosial sehingga memicu keresahan dinamakan...",
+                options: ["Malware", "Hoax", "Spam", "Clickbait"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Upaya menjaga Privasi Data Pribadi di dunia digital dapat dilakukan dengan cara berikut, KECUALI...",
+                options: ["Menggunakan kata sandi yang kuat dan unik", "Mengaktifkan Autentikasi Dua Faktor (2FA)", "Membagikan nomor KTP dan OTP ke orang asing di medsos", "Tidak mengeklik tautan mencurigakan dari nomor tak dikenal"],
+                answer: 2
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Dampak positif dari perkembangan E-Commerce (perdagangan elektronik) bagi masyarakat pedesaan adalah...",
+                options: ["Memudahkan menjual produk lokal ke pasar nasional tanpa perantara", "Meningkatkan tingkat kejahatan penipuan secara langsung", "Menutup seluruh pasar tradisional fisik", "Mengurangi minat belajar siswa"],
+                answer: 0
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Ancaman keamanan di mana virus mengunci/mengenkripsi berkas di komputer korban dan meminta tebusan uang dinamakan...",
+                options: ["Spyware", "Ransomware", "Trojan Horse", "Adware"],
+                answer: 1
+            },
+
+            // --- PRAKTIK LINTAS BIDANG (PLB) ---
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Dalam sebuah proyek pengembangan aplikasi kelompok, tahapan pertama sebelum menulis kode program adalah...",
+                options: ["Analisis Kebutuhan & Perancangan Solusi (Design)", "Pengujian Aplikasi (Testing)", "Pemasaran Aplikasi", "Penulisan Kode (Coding)"],
+                answer: 0
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Penggunaan sensor suhu dan kelembaban yang terhubung ke jaringan internet untuk memantau kondisi tanaman secara otomatis adalah contoh penerapan teknologi...",
+                options: ["Internet of Things (IoT)", "Virtual Reality (VR)", "Artificial Intelligence (AI)", "Blockchain"],
+                answer: 0
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Alat mikroprosesor papan tunggal (Single Board Computer) berukuran kecil seperti Arduino atau Raspberry Pi sering digunakan dalam proyek PLB untuk...",
+                options: ["Membuat dokumen surat masal", "Membuat prototype robotika dan kontrol otomatis", "Mengedit video kualitas tinggi", "Menyimpan database raksasa"],
+                answer: 1
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Teknik presentasi proyek Informatika yang efektif kepada penguji harus memperhatikan aspek berikut, KECUALI...",
+                options: ["Slide memuat poin-poin penting dan visual yang jelas", "Penjelasan disampaikan dengan bahasa yang mudah dipahami", "Membaca seluruh isi teks tulisan di slide tanpa menatap audiens", "Mendemonstrasikan karya/prototype yang telah dibuat"],
+                answer: 2
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Pengujian program di mana penguji memeriksa fungsi aplikasi dari sisi tampilan antarmuka tanpa melihat kode program di dalamnya dinamakan...",
+                options: ["White Box Testing", "Black Box Testing", "Unit Testing", "Stress Testing"],
+                answer: 1
+            },
+
+            // --- PENGUATAN HOTS KELAS 7, 8, 9 (CAMPURAN FASE D) ---
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Diberikan matriks data 2x2. Baris 1: [4, 8], Baris 2: [2, 6]. Jika setiap elemen dikalikan 2 lalu dikurangi 1, nilai elemen pada Baris 2 Kolom 1 adalah...",
+                options: ["3", "7", "11", "15"],
+                answer: 0
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Seorang siswa ingin menggabungkan beberapa kata di sel A1 ('SMP'), B1 ('N'), C1 ('2') menjadi satu teks utuh di D1. Rumus Excel yang tepat adalah...",
+                options: ["=A1+B1+C1", "=CONCATENATE(A1; B1; C1)", "=MERGE(A1:C1)", "=SUM(A1:C1)"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Jika sebuah komputer mengalami 'Blue Screen of Death' (BSOD) secara terus menerus saat dinyalakan, analisis awal kerusakan hardware paling mungkin terjadi pada...",
+                options: ["Mouse kabel terlepas", "Kerusakan/Ketidakcocokan pada modul RAM", "Kertas printer tersangkut", "Monitor redup"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Seorang administrator jaringan ingin membatasi akses situs web tertentu pada jam pelajaran sekolah. Perangkat atau fitur yang dikonfigurasi adalah...",
+                options: ["Web Filter pada Router / Firewall", "Switch Unmanaged", "Modem ADSL", "Kabel UTP Straight"],
+                answer: 0
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Manakah dari tipe grafik berikut yang paling tepat untuk menampilkan tren kenaikan nilai rata-rata ujian siswa dari semester 1 hingga semester 6?",
+                options: ["Grafik Batang Horisontal", "Grafik Garis (Line Chart)", "Grafik Pie 3D", "Grafik Donat"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Perhatikan perulangan: FOR i = 1 TO 5 DO PRINT (i * 2). Output angka yang dihasilkan oleh perulangan tersebut adalah...",
+                options: ["1, 2, 3, 4, 5", "2, 4, 6, 8, 10", "2, 3, 4, 5, 6", "0, 2, 4, 6, 8"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Lisensi 'Creative Commons Attribution (CC BY)' memberikan izin kepada orang lain untuk...",
+                options: ["Menggunakan dan mengubah karya dengan syarat wajib mencantumkan nama pencipta", "Menjual karya tanpa izin pencipta", "Mengubah karya tanpa boleh menyebarkannya", "Mengklaim sebagai karya pribadi"],
+                answer: 0
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Dalam metodologi pengembangan perangkat lunak Agile/Scrum, pertemuan singkat harian anggota tim untuk membahas kendala dan kemajuan proyek disebut...",
+                options: ["Daily Stand-up Meeting", "Sprint Retrospective", "Product Backlog", "Sprint Planning"],
+                answer: 0
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Kota A terhubung ke B (3 km), B ke C (4 km), A ke C (6 km). Jalur terpendek untuk bepergian dari A ke C melalui kota transit B adalah...",
+                options: ["Langsung A ke C (6 km)", "A -> B -> C (7 km)", "A ke C via B lebih cepat", "Langsung A ke C (6 km) karena 6 km < 7 km"],
+                answer: 3
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Fitur 'Track Changes' pada aplikasi pengolah kata sangat berguna ketika...",
+                options: ["Mencetak berkas ke printer", "Bekerja kolaborasi agar setiap suntingan/revisi anggota tim tercatat", "Mengubah jenis huruf seluruh dokumen", "Menghapus gambar berukuran besar"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Berapa byte dalam 1 KiloByte (KB) berdasarkan standar biner sistem komputer?",
+                options: ["1000 Byte", "1024 Byte", "512 Byte", "2048 Byte"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Layanan internet berbasis jaringan kabel serat optik menggunakan pembawa sinyal berupa...",
+                options: ["Gelombang Radio", "Pulsa Cahaya (Lampu Laser)", "Tegangan Listrik Tembaga", "Gelombang Mikro"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Di sel A1=10, A2=20, A3=30. Rumus =MAX(A1:A3) - MIN(A1:A3) akan menghasilkan nilai...",
+                options: ["10", "20", "30", "60"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Karakteristik penting dari sebuah algoritma yang baik adalah 'Finiteness', yang berarti...",
+                options: ["Algoritma harus memiliki instruksi berulang tanpa batas", "Algoritma harus berakhir setelah melakukan sejumlah langkah terbatas", "Algoritma harus ditulis dalam bahasa C++", "Algoritma tidak boleh memiliki input"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Istilah bagi programmer beretika positif yang menggunakan keahliannya untuk menemukan celah keamanan sistem dan melaporkannya agar diperbaiki adalah...",
+                options: ["Black Hat Hacker", "White Hat Hacker / Ethical Hacker", "Script Kiddie", "Cracker"],
+                answer: 1
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Dalam pengurutan data [8, 3, 5, 1] menggunakan Bubble Sort naik (ascending), berapa kali pertukaran posisi pada Pass (Iterasi) Pertama?",
+                options: ["1 kali", "2 kali", "3 kali", "4 kali"],
+                answer: 2
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Untuk menyusun daftar isi dokumen laporan secara otomatis di MS Word, gaya penulisan judul bab harus diatur menggunakan...",
+                options: ["Heading Style (Heading 1, Heading 2)", "Font Bold & Underline saja", "Bullets and Numbering", "Text Box"],
+                answer: 0
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Perangkat Keras penyimpan energi cadangan sementara saat listrik PLN mati tiba-tiba agar komputer tidak langsung padam dinamakan...",
+                options: ["Stabilizer (AVR)", "UPS (Uninterruptible Power Supply)", "Power Supply Unit (PSU)", "Inverter"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Jenis alamat IP 127.0.0.1 secara khusus digunakan dalam jaringan komputer sebagai...",
+                options: ["Default Gateway Router", "Loopback Address (Localhost)", "Broadcast Address", "Subnet Mask Class C"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Dalam analisis data, batas maksimum jumlah kolom pada spreadsheet MS Excel modern (.xlsx) adalah...",
+                options: ["1.048.576", "16.384", "256", "65.536"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Operator aritmetika Modulo (%) dalam pemrograman berfungsi untuk...",
+                options: ["Membagi dua bilangan", "Mencari sisa hasil bagi dari dua bilangan", "Perkalian bertingkat", "Pembulatan desimal"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Aplikasi pesan instan seperti WhatsApp menggunakan enkripsi 'End-to-End Encryption'. Artinya...",
+                options: ["Pesan dapat dibaca oleh penyedia layanan", "Hanya pengirim dan penerima yang dapat membaca isi pesan", "Pesan disimpan publik di internet", "Pesan tidak terkirim jika jaringan lambat"],
+                answer: 1
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Tahapan pengujian produk perangkat lunak bersama pengguna akhir untuk memastikan aplikasi memenuhi kebutuhan pengguna dinamakan...",
+                options: ["User Acceptance Testing (UAT)", "Alpha Testing", "Integration Testing", "Unit Testing"],
+                answer: 0
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Dalam pencarian biner (Binary Search) pada daftar 15 data terurut, jumlah maksimal perbandingan yang dibutuhkan untuk menemukan data adalah...",
+                options: ["15 kali", "4 kali", "8 kali", "2 kali"],
+                answer: 1
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Format berkas vektor gambar yang dapat membesar tanpa pecah/buram saat di-zoom adalah...",
+                options: [".JPG", ".PNG", ".SVG", ".GIF"],
+                answer: 2
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Perangkat komputer yang bertugas mengolah data grafis dan menampikannya ke layar monitor adalah...",
+                options: ["Sound Card", "VGA Card / GPU", "LAN Card", "Capture Card"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Kecepatan transfer data dalam jaringan komputer diukur dalam satuan...",
+                options: ["Hertz (Hz)", "Bytes per second / bps", "RPM", "Watt"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Manakah fungsi spreadsheet yang digunakan untuk menghapus spasi berlebih di awal atau akhir teks?",
+                options: ["=UPPER()", "=LOWER()", "=TRIM()", "=CLEAN()"],
+                answer: 2
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Perhatikan instruksi: IF (Nilai > 80) THEN Predikat = 'A' ELSE Predikat = 'B'. Jika Nilai = 80, maka nilai variabel Predikat adalah...",
+                options: ["A", "B", "Null", "Error"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Keahlian menyaring dan mengevaluasi kebenaran informasi digital sebelum membagikannya dikenal sebagai bagian dari keterampilan...",
+                options: ["Digital Citizenship / Literasi Digital", "Cyber Crime", "Software Engineering", "Hardware Maintenance"],
+                answer: 0
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Dokumen tertulis yang berisi perencanaan lengkap proyek, jadwal kerja, anggaran, dan spesifikasi sistem dinamakan...",
+                options: ["Proposal Proyek", "Logbook", "User Manual", "Laporan Keuangan"],
+                answer: 0
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Di antara pilihan struktur data berikut, manakah yang tidak berurutan dan terhubung melalui simpul (node) serta sisi (edge)?",
+                options: ["Array", "Queue", "Graph", "Stack"],
+                answer: 2
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Shortcut kunci keyboard untuk mengunci layar komputer Windows dengan cepat saat ditinggal adalah...",
+                options: ["Windows Key + L", "Windows Key + D", "Ctrl + Alt + Del", "Alt + F4"],
+                answer: 0
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Instruksi perangkat lunak tingkat rendah yang ditanamkan langsung pada chip ROM perangkat keras disebut...",
+                options: ["Shareware", "Firmware", "Malware", "Freeware"],
+                answer: 1
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Istilah 'Bandwidth' dalam jaringan komputer mengacu pada...",
+                options: ["Panjang fisik kabel jaringan", "Kapasitas maksimum transfer data dalam jalur komunikasi per detik", "Jumlah komputer yang terhubung", "Harga paket kuota internet"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Apabila sel A1 berisi angka 5 dan B1 berisi angka 0, lalu kita memasukkan formula =A1/B1 pada sel C1, maka pesan kesalahan yang muncul adalah...",
+                options: ["#N/A", "#VALUE!", "#DIV/0!", "#REF!"],
+                answer: 2
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Proses menerjemahkan seluruh kode program bahasa tingkat tinggi ke bahasa mesin sekaligus sebelum dijalankan dilakukan oleh...",
+                options: ["Interpreter", "Compiler", "Assembler", "Editor"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Hak eksklusif pencipta yang timbul secara otomatis berdasarkan prinsip deklaratif setelah suatu ciptaan diwujudkan dalam bentuk nyata dinamakan...",
+                options: ["Hak Paten", "Hak Cipta (Copyright)", "Merek Dagang", "Rahasia Dagang"],
+                answer: 1
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Metode pemecahan masalah desain yang berpusat pada pengguna (User-Centered Design) melalui tahap Empatize, Define, Ideate, Prototype, dan Test disebut...",
+                options: ["Design Thinking", "Waterfall Method", "Agile Development", "Scrum Framework"],
+                answer: 0
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Apabila data [12, 7, 20, 5, 15] diurutkan secara terkecil ke terbesar (ascending), urutan hasil yang benar adalah...",
+                options: ["5, 7, 12, 15, 20", "20, 15, 12, 7, 5", "5, 12, 7, 15, 20", "7, 5, 12, 15, 20"],
+                answer: 0
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Fungsi dari fitur 'Wrap Text' pada sel Microsoft Excel adalah...",
+                options: ["Menggabungkan dua sel menjadi satu", "Menyesuaikan tampilan teks panjang agar menjadi beberapa baris dalam sel yang sama", "Mengubah warna teks secara otomatis", "Mengurutkan teks dari A ke Z"],
+                answer: 1
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Jenis memori kecepatan sangat tinggi yang berada di dalam atau sangat dekat dengan CPU untuk mempercepat akses data berulang adalah...",
+                options: ["Cache Memory", "Virtual Memory", "Harddisk", "Flashdisk"],
+                answer: 0
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Domain tingkat tinggi (TLD) '.sch.id' di Indonesia secara khusus digunakan untuk...",
+                options: ["Instansi Pemerintah", "Lembaga Sekolah / Pendidikan", "Perusahaan Komersial", "Organisasi Non-Profit"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Rumus =COUNTIF(A1:A10; '>70') berfungsi untuk...",
+                options: ["Menghitung total penjumlahan sel di atas 70", "Menghitung banyaknya sel yang nilainya lebih dari 70", "Mencari nilai rata-rata sel di atas 70", "Mengubah sel menjadi angka 70"],
+                answer: 1
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "Simbol flowchart yang digunakan untuk menandai alur arus proses dari satu langkah ke langkah berikutnya adalah...",
+                options: ["Garis Panah (Flow Line)", "Persegi Panjang", "Oval", "Jajaran Genjang"],
+                answer: 0
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Di bawah ini yang merupakan tindakan pencegahan kejahatan pencurian identitas di media sosial adalah...",
+                options: ["Mengunggah foto KTP dan sertifikat ke akun publik", "Menggunakan fitur privasi akun dan membatasi teman yang dikenal", "Menerima semua permintaan pertemanan dari orang asing", "Menggunakan kata sandi '123456'"],
+                answer: 1
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Dalam membuat artefak komputasional sederhana, catatan jurnal harian pengerjaan proyek yang mencatat perkembangan dan pembagian tugas tim disebut...",
+                options: ["Logbook Proyek", "Sertifikat", "Brosur", "Slide Presentasi"],
+                answer: 0
+            },
+            {
+                elemen: "Berpikir Komputasional",
+                q: "Sebuah keluarga terdiri dari Ayah, Ibu, dan 2 Anak. Mereka ingin menyeberang sungai dengan perahu yang hanya muat 2 orang. Strategi menemukan langkah penyeberangan paling efisien menggunakan pemikiran...",
+                options: ["Algoritmik & Berpikir Komputasional", "Hafalan Rumus", "Tebak-tebakan Acak", "Emosional"],
+                answer: 0
+            },
+            {
+                elemen: "Teknologi Informasi & Komunikasi",
+                q: "Untuk menyisipkan gambar dari komputer ke dalam dokumen Microsoft Word, langkah menu yang tepat adalah...",
+                options: ["Insert -> Pictures -> This Device", "Home -> Copy -> Paste", "View -> Zoom -> Picture", "Layout -> Margins -> Insert"],
+                answer: 0
+            },
+            {
+                elemen: "Sistem Komputer",
+                q: "Manakah di bawah ini yang tergolong perangkat lunak aplikasi (Application Software)?",
+                options: ["Windows 10", "Linux Fedora", "Microsoft Word", "BIOS"],
+                answer: 2
+            },
+            {
+                elemen: "Jaringan Komputer & Internet",
+                q: "Fitur 'Tethering' pada smartphone berguna untuk...",
+                options: ["Meningkatkan daya tahan baterai", "Membagikan koneksi internet ponsel ke perangkat lain via Wi-Fi/USB", "Mengambil foto jarak jauh", "Membersihkan file sampah"],
+                answer: 1
+            },
+            {
+                elemen: "Analisis Data",
+                q: "Fungsi spreadsheet =LEFT('INFORMATIKA'; 4) akan menghasilkan teks...",
+                options: ["INFO", "TIKA", "FORM", "ATIKA"],
+                answer: 0
+            },
+            {
+                elemen: "Algoritma & Pemrograman",
+                q: "DalamScratch, jika kita ingin membuat sprite bergerak saat tombol panah kanan pada keyboard ditekan, kita menggunakan blok kejadian (Event)...",
+                options: ["when flag clicked", "when [right arrow] key pressed", "when sprite clicked", "broadcast message"],
+                answer: 1
+            },
+            {
+                elemen: "Dampak Sosial Informatika",
+                q: "Aktivitas membeli produk digital secara ilegal melalui situs bajakan melanggar hak cipta dan dapat dikenai hukuman pidana sesuai...",
+                options: ["UU ITE dan UU Hak Cipta", "UUD 1945 Pasal 33", "Hukum Adat", "Peraturan Lalu Lintas"],
+                answer: 0
+            },
+            {
+                elemen: "Praktik Lintas Bidang",
+                q: "Langkah terakhir dalam siklus pengembangan produk informatika sebelum diluncurkan resmi adalah...",
+                options: ["Evaluasi & Pengujian Akhir", "Pembuatan Logo", "Penentuan Harga", "Pembentukan Tim"],
+                answer: 0
+            }
+        ];
+
+        // Global State Variables
+        let examQuestions = []; // Shuffled questions with shuffled options
+        let userAnswers = {};   // Format: { qIndex: selectedOptionIndex }
+        let raguState = {};     // Format: { qIndex: true/false }
+        let currentQIndex = 0;
+        let timerInterval = null;
+        let clockInterval = null;
+        let totalTimeSeconds = 60 * 60; // 60 Menit
+        let remainingTimeSeconds = totalTimeSeconds;
+        let studentData = { nama: '', kelas: '', absen: '' };
+
+        // Utility: Fisher-Yates Shuffle Algorithm
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // Clock real-time update
+        function startRealtimeClock() {
+            const clockEl = document.getElementById('realtime-clock');
+            function updateClock() {
+                const now = new Date();
+                const hrs = String(now.getHours()).padStart(2, '0');
+                const mins = String(now.getMinutes()).padStart(2, '0');
+                const secs = String(now.getSeconds()).padStart(2, '0');
+                clockEl.textContent = `${hrs}:${mins}:${secs} WIB`;
+            }
+            updateClock();
+            clockInterval = setInterval(updateClock, 1000);
+        }
+
+        // Start Exam function
+        function startExam(e) {
+            e.preventDefault();
+            
+            // Get Student Metadata
+            studentData.nama = document.getElementById('input-nama').value.trim();
+            studentData.kelas = document.getElementById('input-kelas').value;
+            studentData.absen = document.getElementById('input-absen').value;
+
+            if (!studentData.nama || !studentData.kelas || !studentData.absen) {
+                alert("Harap lengkapi semua data identitas siswa!");
+                return;
+            }
+
+            // Shuffle Questions and Shuffling Options inside each question
+            const shuffledRaw = shuffleArray(rawQuestions);
+            examQuestions = shuffledRaw.map(q => {
+                // Map original options with indices
+                const optionsWithOrigIndex = q.options.map((optText, idx) => ({
+                    text: optText,
+                    isCorrect: idx === q.answer
+                }));
+                
+                // Shuffle options
+                const shuffledOpts = shuffleArray(optionsWithOrigIndex);
+                const newAnswerIndex = shuffledOpts.findIndex(o => o.isCorrect);
+
+                return {
+                    elemen: q.elemen,
+                    q: q.q,
+                    options: shuffledOpts.map(o => o.text),
+                    answer: newAnswerIndex,
+                    originalQ: q
+                };
+            });
+
+            // Reset States
+            userAnswers = {};
+            raguState = {};
+            currentQIndex = 0;
+
+            // Switch UI screens
+            document.getElementById('screen-login').classList.add('hidden');
+            document.getElementById('screen-exam').classList.remove('hidden');
+
+            // Render Nav Grid and First Question
+            renderNavGrid();
+            loadQuestion(0);
+
+            // Start Countdown Timer
+            startTimer();
+        }
+
+        function startTimer() {
+            remainingTimeSeconds = totalTimeSeconds;
+            const timerEl = document.getElementById('timer-countdown');
+
+            timerInterval = setInterval(() => {
+                remainingTimeSeconds--;
+                
+                const m = Math.floor(remainingTimeSeconds / 60);
+                const s = remainingTimeSeconds % 60;
+                timerEl.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+                if (remainingTimeSeconds <= 300) { // 5 menit terakhir
+                    timerEl.parentElement.classList.add('animate-pulse', 'bg-red-100');
+                }
+
+                if (remainingTimeSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Waktu pengerjaan telah habis! Sistem akan mengumpulkan jawaban Anda otomatis.");
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        // Render Navigation Grid (100 buttons)
+        function renderNavGrid() {
+            const gridEl = document.getElementById('nav-grid');
+            gridEl.innerHTML = '';
+
+            for (let i = 0; i < examQuestions.length; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.id = `nav-btn-${i}`;
+                btn.textContent = i + 1;
+                btn.onclick = () => loadQuestion(i);
+                btn.className = `h-8 w-full rounded font-semibold text-xs transition flex items-center justify-center border ${getNavBtnStyle(i)}`;
+                gridEl.appendChild(btn);
+            }
+            updateAnsweredCount();
+        }
+
+        function getNavBtnStyle(index) {
+            const isAnswered = userAnswers.hasOwnProperty(index);
+            const isRagu = raguState[index];
+            const isCurrent = currentQIndex === index;
+
+            let classes = "";
+            if (isCurrent) {
+                classes += " ring-2 ring-brand-800 ring-offset-1 font-bold ";
+            }
+
+            if (isRagu) {
+                classes += " bg-amber-400 text-slate-900 border-amber-500 ";
+            } else if (isAnswered) {
+                classes += " bg-brand-600 text-white border-brand-700 ";
+            } else {
+                classes += " bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200 ";
+            }
+
+            return classes;
+        }
+
+        function updateNavGridStyles() {
+            for (let i = 0; i < examQuestions.length; i++) {
+                const btn = document.getElementById(`nav-btn-${i}`);
+                if (btn) {
+                    btn.className = `h-8 w-full rounded font-semibold text-xs transition flex items-center justify-center border ${getNavBtnStyle(i)}`;
+                }
+            }
+            updateAnsweredCount();
+        }
+
+        function updateAnsweredCount() {
+            const count = Object.keys(userAnswers).length;
+            document.getElementById('stat-terjawab').textContent = `${count}/${examQuestions.length} Terjawab`;
+        }
+
+        // Load Question UI
+        function loadQuestion(index) {
+            currentQIndex = index;
+            const qData = examQuestions[index];
+
+            // Header info
+            document.getElementById('badge-elemen').textContent = `Elemen: ${qData.elemen}`;
+            document.getElementById('badge-soal-num').textContent = `Soal ${index + 1} dari ${examQuestions.length}`;
+            document.getElementById('question-text').textContent = `${index + 1}. ${qData.q}`;
+
+            // Checkbox Ragu
+            const raguCheck = document.getElementById('check-ragu');
+            raguCheck.checked = !!raguState[index];
+
+            // Render Options
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            const optionLabels = ['A', 'B', 'C', 'D'];
+
+            qData.options.forEach((optText, optIdx) => {
+                const isSelected = userAnswers[index] === optIdx;
+
+                const label = document.createElement('label');
+                label.className = `flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition select-none ${
+                    isSelected 
+                        ? 'bg-brand-50 border-brand-500 text-brand-900 font-medium shadow-sm' 
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                }`;
+
+                label.innerHTML = `
+                    <input type="radio" name="option" value="${optIdx}" ${isSelected ? 'checked' : ''} onchange="selectOption(${optIdx})" class="mt-0.5 text-brand-600 focus:ring-brand-500 w-4 h-4">
+                    <span class="font-bold text-xs uppercase px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600">${optionLabels[optIdx]}</span>
+                    <span class="text-sm leading-relaxed">${optText}</span>
+                `;
+                container.appendChild(label);
+            });
+
+            // Button Prev/Next states
+            document.getElementById('btn-prev').disabled = (index === 0);
+            const btnNext = document.getElementById('btn-next');
+            if (index === examQuestions.length - 1) {
+                btnNext.innerHTML = `Selesai <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
+            } else {
+                btnNext.innerHTML = `Lanjut <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>`;
+            }
+
+            updateNavGridStyles();
+        }
+
+        function selectOption(optIndex) {
+            userAnswers[currentQIndex] = optIndex;
+            loadQuestion(currentQIndex);
+        }
+
+        function toggleRagu() {
+            const check = document.getElementById('check-ragu');
+            if (check.checked) {
+                raguState[currentQIndex] = true;
+            } else {
+                delete raguState[currentQIndex];
+            }
+            updateNavGridStyles();
+        }
+
+        function prevQuestion() {
+            if (currentQIndex > 0) {
+                loadQuestion(currentQIndex - 1);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQIndex < examQuestions.length - 1) {
+                loadQuestion(currentQIndex + 1);
+            } else {
+                confirmSubmit();
+            }
+        }
+
+        // Confirm & Finish Exam
+        function confirmSubmit() {
+            const answeredCount = Object.keys(userAnswers).length;
+            const unanswered = examQuestions.length - answeredCount;
+            const raguCount = Object.keys(raguState).length;
+
+            let msg = `Apakah Anda yakin ingin menyelesaikan ujian ini?\n\n- Terjawab: ${answeredCount} Soal\n- Belum Dijawab: ${unanswered} Soal`;
+            if (raguCount > 0) {
+                msg += `\n- Masih Ragu-ragu: ${raguCount} Soal`;
+            }
+
+            if (confirm(msg)) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+
+            // Calculate Score
+            let benar = 0;
+            let salah = 0;
+            let kosong = 0;
+
+            examQuestions.forEach((q, idx) => {
+                if (userAnswers.hasOwnProperty(idx)) {
+                    if (userAnswers[idx] === q.answer) {
+                        benar++;
+                    } else {
+                        salah++;
+                    }
+                } else {
+                    kosong++;
+                }
+            });
+
+            // Score scale 0 - 100
+            const score = Math.round((benar / examQuestions.length) * 100);
+
+            // Time elapsed
+            const elapsedSeconds = totalTimeSeconds - remainingTimeSeconds;
+            const elapsedMins = Math.floor(elapsedSeconds / 60);
+            const elapsedSecs = elapsedSeconds % 60;
+            const timeFormatted = `${elapsedMins} Menit ${elapsedSecs} Detik`;
+
+            // Fill Result UI
+            document.getElementById('res-nama').textContent = studentData.nama;
+            document.getElementById('res-kelas').textContent = studentData.kelas;
+            document.getElementById('res-absen').textContent = studentData.absen;
+            document.getElementById('res-waktu').textContent = timeFormatted;
+            
+            const now = new Date();
+            document.getElementById('res-tanggal').textContent = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()} - ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+            document.getElementById('res-score').textContent = score;
+            document.getElementById('res-benar').textContent = benar;
+            document.getElementById('res-salah').textContent = salah;
+            document.getElementById('res-kosong').textContent = kosong;
+
+            // Render Pembahasan / Answer Key Analysis
+            renderPembahasan();
+
+            // Switch Screen
+            document.getElementById('screen-exam').classList.add('hidden');
+            document.getElementById('screen-result').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderPembahasan() {
+            const container = document.getElementById('pembahasan-container');
+            container.innerHTML = '';
+
+            const optionLabels = ['A', 'B', 'C', 'D'];
+
+            examQuestions.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = userAns === q.answer;
+                const isAnswered = userAns !== undefined;
+
+                const card = document.createElement('div');
+                card.className = `p-4 sm:p-5 rounded-xl border text-xs sm:text-sm space-y-2 ${
+                    isCorrect 
+                        ? 'bg-emerald-50/50 border-emerald-200' 
+                        : (isAnswered ? 'bg-rose-50/50 border-rose-200' : 'bg-slate-50 border-slate-200')
+                }`;
+
+                let statusBadge = '';
+                if (isCorrect) {
+                    statusBadge = `<span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded text-[11px] flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Benar</span>`;
+                } else if (isAnswered) {
+                    statusBadge = `<span class="bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded text-[11px] flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg> Salah</span>`;
+                } else {
+                    statusBadge = `<span class="bg-slate-200 text-slate-700 font-bold px-2.5 py-0.5 rounded text-[11px]">Tidak Dijawab</span>`;
+                }
+
+                let optionsHtml = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">';
+                q.options.forEach((opt, oIdx) => {
+                    let optStyle = "bg-white border-slate-200 text-slate-600";
+                    if (oIdx === q.answer) {
+                        optStyle = "bg-emerald-100 border-emerald-400 font-bold text-emerald-900"; // Kunci
+                    } else if (oIdx === userAns && !isCorrect) {
+                        optStyle = "bg-rose-100 border-rose-400 font-bold text-rose-900"; // Jawaban salah user
+                    }
+
+                    optionsHtml += `
+                        <div class="p-2 rounded border text-xs flex items-center gap-2 ${optStyle}">
+                            <span class="font-bold uppercase px-1.5 py-0.5 rounded bg-white/60 border border-slate-300 text-[10px]">${optionLabels[oIdx]}</span>
+                            <span>${opt}</span>
+                            ${oIdx === q.answer ? '<span class="ml-auto text-[10px] text-emerald-700 font-bold">(Kunci)</span>' : ''}
+                            ${oIdx === userAns && !isCorrect ? '<span class="ml-auto text-[10px] text-rose-700 font-bold">(Anda)</span>' : ''}
+                        </div>
+                    `;
+                });
+                optionsHtml += '</div>';
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
+                        <span class="font-bold text-slate-700 text-xs">No. ${idx + 1} (${q.elemen})</span>
+                        ${statusBadge}
+                    </div>
+                    <div class="font-medium text-slate-800 text-sm leading-relaxed">${q.q}</div>
+                    ${optionsHtml}
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Download Results as CSV file
+        function downloadCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "SEKOLAH,SMP NEGERI 2 NGADIREJO\n";
+            csvContent += "MATA PELAJARAN,INFORMATIKA FASE D\n";
+            csvContent += "GURU PENGAMPUS,BUDI WINARNO S.KOM.\n";
+            csvContent += `NAMA SISWA,${studentData.nama}\n`;
+            csvContent += `KELAS,${studentData.kelas}\n`;
+            csvContent += `NO ABSEN,${studentData.absen}\n`;
+            csvContent += `SKOR AKHIR,${document.getElementById('res-score').textContent}\n`;
+            csvContent += `JAWABAN BENAR,${document.getElementById('res-benar').textContent}\n`;
+            csvContent += `JAWABAN SALAH,${document.getElementById('res-salah').textContent}\n`;
+            csvContent += `TIDAK DIJAWAB,${document.getElementById('res-kosong').textContent}\n`;
+            csvContent += `WAKTU PEMANFAATAN,${document.getElementById('res-waktu').textContent}\n\n`;
+
+            csvContent += "NO,ELEMEN,JAWABAN_SISWA,KUNCI_JAWABAN,STATUS\n";
+
+            examQuestions.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const optionLabels = ['A', 'B', 'C', 'D'];
+                const userAnsLabel = userAns !== undefined ? optionLabels[userAns] : "KOSONG";
+                const keyLabel = optionLabels[q.answer];
+                const status = (userAns === q.answer) ? "BENAR" : (userAns !== undefined ? "SALAH" : "KOSONG");
+
+                csvContent += `${idx + 1},"${q.elemen}","${userAnsLabel}","${keyLabel}","${status}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Nilai_CBT_Informatika_${studentData.nama.replace(/\s+/g, '_')}_${studentData.kelas}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize clock on page load
+        window.onload = function() {
+            startRealtimeClock();
+        };
+    </script>
+</body>
+</html>
